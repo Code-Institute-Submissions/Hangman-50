@@ -1,12 +1,16 @@
-# Your code goes here.
-# You can delete these comments, but do not change the name of this file
-# Write your code to expect a terminal of 80 characters wide and 24 rows high
+#import modules and py files used
 
 import random
 from words import word_list
 
 def get_word():
+    """
+    Picks a random word from word list
+    Returns the word as all uppercase
+    Sets it for use in current game
+    """
     word = random.choice(word_list)
-    print(word)
+    print(word.upper())
+    
 
 get_word()
