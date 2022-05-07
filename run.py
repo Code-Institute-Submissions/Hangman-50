@@ -57,10 +57,25 @@ def play(word):
                     word_as_list[index] = guess
                 # convert back to string
                 word_completion = "".join(word_as_list)
+                # check for win condition
+                if "_" not in word_completion:
+                    guessed = True
 
         #..if guess is the same length of the chosen word and all letters
         elif len(guess) == len(word) and guess.isalpha()
+            # if a full word guess has already been tried with the same word
+            if guess in guessed_words:
+                print("You already guessed the word", guess)
+            # if a full word guess is valid but not correct
+            elif guess != word:
+                print(guess, "is not the right word")
+                tries -= 1
+                guessed_words.append(guess)
 
+        
+        
+        
+        
         else:
             print("That is not a valid guess. Please try again.")
         print(display_hangman(lives))
