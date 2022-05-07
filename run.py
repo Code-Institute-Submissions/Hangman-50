@@ -71,16 +71,19 @@ def play(word):
                 print(guess, "is not the right word")
                 tries -= 1
                 guessed_words.append(guess)
-
-        
-        
-        
-        
+            # a full word guess is valid and correct
+            else:
+                guessed = True
+                word_completion = word
         else:
             print("That is not a valid guess. Please try again.")
         print(display_hangman(lives))
         print(word_completion)
         print("\n")
+    # if player wins the game
+    if guessed:
+        print("Congrats, you guessed the word!", word)
+
         
 
 
