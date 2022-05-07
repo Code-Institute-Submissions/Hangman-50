@@ -1,4 +1,4 @@
-#import modules and py files used
+# import modules and py files used
 
 import random
 from words import word_list
@@ -32,7 +32,7 @@ def play(word):
     print(display_hangman(lives))
     print(word_completion)
     print("\n")
-    #loop for game logic
+    # loop for game logic
     while not guessed and lives > 0:
         guess = input("Please guess a letter or word: ").upper()
         # ..if guess is one letter
@@ -61,8 +61,8 @@ def play(word):
                 if "_" not in word_completion:
                     guessed = True
 
-        #..if guess is the same length of the chosen word and all letters
-        elif len(guess) == len(word) and guess.isalpha()
+        # ..if guess is the same length of the chosen word and all letters
+        elif len(guess) == len(word) and guess.isalpha():
             # if a full word guess has already been tried with the same word
             if guess in guessed_words:
                 print("You already guessed the word", guess)
@@ -86,17 +86,6 @@ def play(word):
     # if player runs out of lives
     else:
         print("Sorry, you ran out of lives. The word was " + word + ". Maybe next time!")
-
-        
-
-
-
-
-
-
-
-
-
 
 def display_hangman(lives):
     """
@@ -169,3 +158,12 @@ def display_hangman(lives):
                 """,
     ]
     return stages[lives]
+
+# main game function
+def main():
+    word = get_word()
+    play(word)
+    # player input to start new games or not
+    while input("Play Again? (Y/N) ").upper() == "Y":
+        word = get_word()
+        play(word)
