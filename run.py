@@ -50,7 +50,13 @@ def play(word):
                 print("Awesome,", guess, "is in the word!")
                 guessed_letters.append(guess)
                 # convert word string to list to allow correct letters to be shown to player
-                
+                word_as_list = list(word_completion)
+                # find letters in list that have been guessed using index numbers in list
+                indices = [i for i, letter in enumerate(word) if letter == guess]
+                for index in indices:
+                    word_as_list[index] = guess
+                # convert back to string
+                word_completion = "".join(word_as_list)
 
         #..if guess is the same length of the chosen word and all letters
         elif len(guess) == len(word) and guess.isalpha()
