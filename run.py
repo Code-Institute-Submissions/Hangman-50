@@ -40,10 +40,18 @@ def play(word):
             # checking to see if letter has already been guessed
             if guess in guessed_letters:
                 print("You already guessed", guess)
+            # if letter guessed is not correct
             elif guess not in word:
                 print(guess, "is not in the word.")
                 lives -= 1
                 guessed_letters.append(guess)
+            # if guessed letter is in the current games word
+            else:
+                print("Awesome,", guess, "is in the word!")
+                guessed_letters.append(guess)
+                # convert word string to list to allow correct letters to be shown to player
+                
+
         #..if guess is the same length of the chosen word and all letters
         elif len(guess) == len(word) and guess.isalpha()
 
