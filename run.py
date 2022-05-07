@@ -37,12 +37,17 @@ def play(word):
         guess = input("Please guess a letter or word: ").upper()
         # ..if guess is one letter
         if len(guess) == 1 and guess.isalpha():
-
+            # checking to see if letter has already been guessed
+            if guess in guessed_letters:
+                print("You already guessed that letter, try again.")
         #..if guess is the same length of the chosen word and all letters
         elif len(guess) == len(word) and guess.isalpha()
 
         else:
             print("That is not a valid guess. Please try again.")
+        print(display_hangman(lives))
+        print(word_completion)
+        print("\n")
         
 
 
