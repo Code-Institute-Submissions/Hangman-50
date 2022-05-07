@@ -83,6 +83,9 @@ def play(word):
     # if player wins the game
     if guessed:
         print("Congrats, you guessed the word!", word)
+    # if player runs out of lives
+    else:
+        print("Sorry, you ran out of lives. The word was " + word + ". Maybe next time!")
 
         
 
