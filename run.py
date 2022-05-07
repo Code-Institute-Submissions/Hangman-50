@@ -167,3 +167,9 @@ def main():
     while input("Play Again? (Y/N) ").upper() == "Y":
         word = get_word()
         play(word)
+
+
+# code snippet to make game play in command line, not sure if needs to be removed once uploaded to Heroku?!
+
+if __name__ == "__main__":
+    main()a
