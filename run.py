@@ -3,6 +3,7 @@
 import random
 from words import word_list
 
+
 def get_word():
     """
     Picks a random word from word list
@@ -15,7 +16,7 @@ def get_word():
 
 def play(word):
     """
-    Set up initial play variables    
+    Set up initial play variables
     set up the correct number of underscores for the word length
     """
     word_completion = "_" * len(word)
@@ -25,7 +26,7 @@ def play(word):
     guessed_letters = []
     # list to add full words that have been guessed to
     guessed_words = []
-    # number of guesses left before game is lost, (head, torso, left and right arms, left and right legs)
+    # number of guesses left before game is lost, (head, torso, arms, and legs)
     lives = 6
     # prints welcome message, ASCII art and current word status
     print("Let's play a game of Hangman!")
@@ -49,9 +50,9 @@ def play(word):
             else:
                 print("Awesome,", guess, "is in the word!")
                 guessed_letters.append(guess)
-                # convert word string to list to allow correct letters to be shown to player
+                # convert word string to list, allow correct letters to show
                 word_as_list = list(word_completion)
-                # find letters in list that have been guessed using index numbers in list
+                # find letters in list that have been guessed using list
                 indices = [i for i, letter in enumerate(word) if letter == guess]
                 for index in indices:
                     word_as_list[index] = guess
@@ -69,14 +70,14 @@ def play(word):
             # if a full word guess is valid but not correct
             elif guess != word:
                 print(guess, "is not the right word")
-                tries -= 1
+                lives -= 1
                 guessed_words.append(guess)
             # a full word guess is valid and correct
             else:
                 guessed = True
                 word_completion = word
         else:
-            print("That is not a valid guess. Please try again.")
+            print("That is not a valid guess. Please guess a letter or word.")
         print(display_hangman(lives))
         print(word_completion)
         print("\n")
@@ -108,7 +109,7 @@ def display_hangman(lives):
                     |      O
                     |     \\|/
                     |      |
-                    |     / 
+                    |     /
                     -
                 """,
                 """
@@ -117,7 +118,7 @@ def display_hangman(lives):
                     |      O
                     |     \\|/
                     |      |
-                    |     
+                    |
                     -
                 """,
                 """
@@ -126,7 +127,7 @@ def display_hangman(lives):
                     |      O
                     |     \\|
                     |      |
-                    |     
+                    |
                     -
                 """,
                 """
@@ -135,25 +136,25 @@ def display_hangman(lives):
                     |      O
                     |      |
                     |      |
-                    |     
+                    |
                     -
                 """,
                 """
                     --------
                     |      |
                     |      O
-                    |     
-                    |    
-                    |     
+                    |
+                    |
+                    |
                     -
                 """,
                 """
                     --------
                     |      |
-                    |      
-                    |    
-                    |     
-                    |     
+                    |
+                    |
+                    |
+                    |
                     -
                 """,
     ]
