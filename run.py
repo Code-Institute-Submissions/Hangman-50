@@ -39,7 +39,11 @@ def play(word):
         if len(guess) == 1 and guess.isalpha():
             # checking to see if letter has already been guessed
             if guess in guessed_letters:
-                print("You already guessed that letter, try again.")
+                print("You already guessed", guess)
+            elif guess not in word:
+                print(guess, "is not in the word.")
+                lives -= 1
+                guessed_letters.append(guess)
         #..if guess is the same length of the chosen word and all letters
         elif len(guess) == len(word) and guess.isalpha()
 
