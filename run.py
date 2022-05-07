@@ -10,7 +10,7 @@ def get_word():
     Sets it for use in current game
     """
     word = random.choice(word_list)
-    print(word.upper())
+    return word.upper()
     
 
-get_word()
+
