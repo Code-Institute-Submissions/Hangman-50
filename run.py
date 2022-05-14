@@ -1,7 +1,97 @@
 # import modules and py files used
 
 import random
-from words import word_list
+from constants import WORD_LIST, STAGES
+
+
+class Hangman:
+    """
+    creates an instance of the Hangman game
+    """
+
+    def __init__(self):
+        self.word = random.choice(WORD_LIST).upper()
+        self.word_completion = "_" * len(self.word)
+        self.guessed_letters = []
+        self.guessed_words = []
+        self.lives = 6
+        self.games_played = 0
+        self.games_won = 0
+        self.games_lost = 0
+
+    def welcome_message(self):
+        print("Let's play a game of Hangman!")
+        print(f"The word is {self.word}")
+
+    def display_hangman(self):
+        """
+        adds visual ASCII art to player to indicate
+        how many lives they have used/left
+        """
+        print("DEBUG 4")
+        print(STAGES[self.lives])
+        print("DEBUG 5")
+        print(self.word_completion)
+        print("DEBUG 6")
+
+    def play_hangman(self):
+        self.display_hangman()
+        guessed = False
+        while not guessed and self.lives > 0:
+            guess = input("Please guess a letter or word: ").upper().trim()
+            # ..if guess is one letter
+            if len(guess) == 1 and guess.isalpha():
+                # checking to see if letter has already been guessed
+                if guess in self.guessed_letters:
+                    print("You already guessed", guess)
+                # if letter guessed is not correct
+                elif guess not in self.word:
+                    print(guess, "is not in the word.")
+                    self.lives -= 1
+                    self.guessed_letters.append(guess)
+                # if guessed letter is in the current games word
+                else:
+                    print("Awesome,", guess, "is in the word!")
+                    self.guessed_letters.append(guess)
+                    # convert word string to list, allow correct letters to show  # noqa
+                    word_as_list = list(self.word_completion)
+                    # find letters in list that have been guessed using list
+                    indices = [i for i, letter in enumerate(
+                        self.word) if letter == guess]
+                    for index in indices:
+                        word_as_list[index] = guess
+                    # convert back to string
+                    self.word_completion = "".join(word_as_list)
+                    # check for win condition
+                    if "_" not in self.word_completion:
+                        guessed = True
+
+            # ..if guess is the same length of the chosen word and all letters
+            elif len(guess) == len(self.word) and guess.isalpha():
+                # if a full word guess has already been tried with the same word  # noqa
+                if guess in self.guessed_words:
+                    print("You already guessed the word", guess)
+                # if a full word guess is valid but not correct
+                elif guess != self.word:
+                    print(guess, "is not the right word")
+                    self.lives -= 1
+                    self.guessed_words.append(guess)
+                # a full word guess is valid and correct
+                else:
+                    guessed = True
+                    self.word_completion = self.word
+            else:
+                print("That is not a valid guess. Please guess a letter or word.")  # noqa
+            self.display_hangman()
+            print("\n")
+        # if player wins the game
+        if guessed:
+            print("Congrats, you guessed the word!", self.word)
+        # if player runs out of lives
+        else:
+            print("Sorry, you ran out of lives. The word was " +
+                  self.word + ". Maybe next time!")
+
 
 
 def get_word():
@@ -10,164 +100,22 @@ def get_word():
     Returns the word as all uppercase
     Sets it for use in current game
     """
-    word = random.choice(word_list)
+    word = random.choice(WORD_LIST)
     return word.upper()
 
 
-def play(word):
-    """
-    Set up initial play variables
-    set up the correct number of underscores for the word length
-    """
-    word_completion = "_" * len(word)
-    # initial state of has the word been correctly guessed is set to False
-    guessed = False
-    # list to add letters that have been guessed to
-    guessed_letters = []
-    # list to add full words that have been guessed to
-    guessed_words = []
-    # number of guesses left before game is lost, (head, torso, arms, and legs)
-    lives = 6
-    # prints welcome message, ASCII art and current word status
-    print("Let's play a game of Hangman!")
-    print(display_hangman(lives))
-    print(word_completion)
-    print("\n")
-    # loop for game logic
-    while not guessed and lives > 0:
-        guess = input("Please guess a letter or word: ").upper()
-        # ..if guess is one letter
-        if len(guess) == 1 and guess.isalpha():
-            # checking to see if letter has already been guessed
-            if guess in guessed_letters:
-                print("You already guessed", guess)
-            # if letter guessed is not correct
-            elif guess not in word:
-                print(guess, "is not in the word.")
-                lives -= 1
-                guessed_letters.append(guess)
-            # if guessed letter is in the current games word
-            else:
-                print("Awesome,", guess, "is in the word!")
-                guessed_letters.append(guess)
-                # convert word string to list, allow correct letters to show
-                word_as_list = list(word_completion)
-                # find letters in list that have been guessed using list
-                indices = [i for i, letter in enumerate(word) if letter == guess]
-                for index in indices:
-                    word_as_list[index] = guess
-                # convert back to string
-                word_completion = "".join(word_as_list)
-                # check for win condition
-                if "_" not in word_completion:
-                    guessed = True
-
-        # ..if guess is the same length of the chosen word and all letters
-        elif len(guess) == len(word) and guess.isalpha():
-            # if a full word guess has already been tried with the same word
-            if guess in guessed_words:
-                print("You already guessed the word", guess)
-            # if a full word guess is valid but not correct
-            elif guess != word:
-                print(guess, "is not the right word")
-                lives -= 1
-                guessed_words.append(guess)
-            # a full word guess is valid and correct
-            else:
-                guessed = True
-                word_completion = word
-        else:
-            print("That is not a valid guess. Please guess a letter or word.")
-        print(display_hangman(lives))
-        print(word_completion)
-        print("\n")
-    # if player wins the game
-    if guessed:
-        print("Congrats, you guessed the word!", word)
-    # if player runs out of lives
-    else:
-        print("Sorry, you ran out of lives. The word was " + word + ". Maybe next time!")
-
-def display_hangman(lives):
-    """
-    adds visual ASCII art to player to indicate
-    how many lives they have used/left
-    """
-    stages = [
-                """
-                    --------
-                    |      |
-                    |      O
-                    |     \\|/
-                    |      |
-                    |     / \\
-                    -
-                """,
-                """
-                    --------
-                    |      |
-                    |      O
-                    |     \\|/
-                    |      |
-                    |     /
-                    -
-                """,
-                """
-                    --------
-                    |      |
-                    |      O
-                    |     \\|/
-                    |      |
-                    |
-                    -
-                """,
-                """
-                    --------
-                    |      |
-                    |      O
-                    |     \\|
-                    |      |
-                    |
-                    -
-                """,
-                """
-                    --------
-                    |      |
-                    |      O
-                    |      |
-                    |      |
-                    |
-                    -
-                """,
-                """
-                    --------
-                    |      |
-                    |      O
-                    |
-                    |
-                    |
-                    -
-                """,
-                """
-                    --------
-                    |      |
-                    |
-                    |
-                    |
-                    |
-                    -
-                """,
-    ]
-    return stages[lives]
-
-# main game function
 def main():
-    word = get_word()
-    play(word)
+    # word = get_word()
+    # play(word)
+    hangman_game = Hangman()
+    hangman_game.welcome_message()
+    hangman_game.play_hangman()
     # player input to start new games or not
     while input("Play Again? (Y/N) ").upper() == "Y":
-        word = get_word()
-        play(word)
+        # word = get_word()
+        # play(word)
+        hangman_game = Hangman()
+        hangman_game.play_hangman()
 
 
 # code snippet to make game play in command line, not sure if needs to be removed once uploaded to Heroku?!
