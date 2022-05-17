@@ -48,7 +48,7 @@ class Hangman:
         self.display_hangman()
         guessed = False
         while not guessed and self.lives > 0:
-            guess = input("Please guess a letter or word: ").upper().strip()
+            guess = input("Please guess a letter or word: \n").upper().strip()
             if len(guess) == 1 and guess.isalpha():
                 if guess in self.guessed_letters:
                     print("You already guessed", guess)
@@ -113,7 +113,7 @@ def main():
     hangman_game.welcome_message()
     hangman_game.play_hangman()
     # player input to start new games or quit playing
-    while input("Play Again? (Y/N) ").upper() == "Y":
+    while input("Play Again? (Y/N) \n").upper() == "Y":
         hangman_game = Hangman()
         hangman_game.play_hangman()
 
