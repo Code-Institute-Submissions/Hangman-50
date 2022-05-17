@@ -1,12 +1,14 @@
 # import modules and py files used
 
 import random
+import pyfiglet
 from constants import WORD_LIST, STAGES
 
 
 class Hangman:
     """
     creates an instance of the Hangman game
+    sets up variables
     """
 
     def __init__(self):
@@ -20,7 +22,8 @@ class Hangman:
         self.games_lost = 0
 
     def welcome_message(self):
-        print("Let's play a game of Hangman!")
+        print("Let's play a game of...")
+        print(pyfiglet.figlet_format("Hangman!"))
 
     def display_hangman(self):
         """
@@ -110,6 +113,7 @@ def main():
         hangman_game.play_hangman()
 
 # code snippet to make game play in command line, not sure if needs to be removed once uploaded to Heroku?!  # noqa
+
 
 if __name__ == "__main__":
     main()
