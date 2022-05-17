@@ -116,9 +116,3 @@ def main():
     while input("Play Again? (Y/N) \n").upper() == "Y":
         hangman_game = Hangman()
         hangman_game.play_hangman()
-
-# code snippet to make game play in command line, not sure if needs to be removed once uploaded to Heroku?!  # noqa
-
-
-if __name__ == "__main__":
-    main()
