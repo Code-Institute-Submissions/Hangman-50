@@ -117,5 +117,6 @@ def main():
         hangman_game = Hangman()
         hangman_game.play_hangman()
 
+
 if __name__ == "__main__":
     main()
