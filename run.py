@@ -21,24 +21,21 @@ class Hangman:
 
     def welcome_message(self):
         print("Let's play a game of Hangman!")
-        print(f"The word is {self.word}")
 
     def display_hangman(self):
         """
         adds visual ASCII art to player to indicate
         how many lives they have used/left
         """
-        print("DEBUG 4")
+
         print(STAGES[self.lives])
-        print("DEBUG 5")
         print(self.word_completion)
-        print("DEBUG 6")
 
     def play_hangman(self):
         self.display_hangman()
         guessed = False
         while not guessed and self.lives > 0:
-            guess = input("Please guess a letter or word: ").upper().trim()
+            guess = input("Please guess a letter or word: ").upper().strip()
             # ..if guess is one letter
             if len(guess) == 1 and guess.isalpha():
                 # checking to see if letter has already been guessed
@@ -93,7 +90,6 @@ class Hangman:
                   self.word + ". Maybe next time!")
 
 
-
 def get_word():
     """
     Picks a random word from word list
@@ -105,20 +101,15 @@ def get_word():
 
 
 def main():
-    # word = get_word()
-    # play(word)
     hangman_game = Hangman()
     hangman_game.welcome_message()
     hangman_game.play_hangman()
     # player input to start new games or not
     while input("Play Again? (Y/N) ").upper() == "Y":
-        # word = get_word()
-        # play(word)
         hangman_game = Hangman()
         hangman_game.play_hangman()
 
-
-# code snippet to make game play in command line, not sure if needs to be removed once uploaded to Heroku?!
+# code snippet to make game play in command line, not sure if needs to be removed once uploaded to Heroku?!  # noqa
 
 if __name__ == "__main__":
     main()
