@@ -13,43 +13,50 @@ class Hangman:
 
     def __init__(self):
         self.word = random.choice(WORD_LIST).upper()
-        self.word_completion = "_" * len(self.word)
+        self.word_completion = "-" * len(self.word)
         self.guessed_letters = []
         self.guessed_words = []
         self.lives = 6
-        self.games_played = 0
-        self.games_won = 0
-        self.games_lost = 0
 
     def welcome_message(self):
+        """
+        creates a welcome message
+        uses pyfiglet font
+        """
         print("Let's play a game of...")
         print(pyfiglet.figlet_format("Hangman!"))
 
     def display_hangman(self):
         """
         adds visual ASCII art to player to indicate
-        how many lives they have used/left
+        how many lives the player has used/left
         """
-
         print(STAGES[self.lives])
         print(self.word_completion)
 
     def play_hangman(self):
+        """
+        checks for player input and validates for:
+        repeat single letter guess
+        incorrect single letter guess
+        correct single letter guess
+        repeat full word guess
+        incorrect full word guess
+        correct full word guess.
+        updates guess lists as required and gives feedback to player
+        """
         self.display_hangman()
         guessed = False
         while not guessed and self.lives > 0:
             guess = input("Please guess a letter or word: ").upper().strip()
-            # ..if guess is one letter
             if len(guess) == 1 and guess.isalpha():
-                # checking to see if letter has already been guessed
                 if guess in self.guessed_letters:
                     print("You already guessed", guess)
-                # if letter guessed is not correct
                 elif guess not in self.word:
                     print(guess, "is not in the word.")
                     self.lives -= 1
                     self.guessed_letters.append(guess)
-                # if guessed letter is in the current games word
+                    print("You have: " + str(self.lives) + " lives remaining")
                 else:
                     print("Awesome,", guess, "is in the word!")
                     self.guessed_letters.append(guess)
@@ -63,19 +70,17 @@ class Hangman:
                     # convert back to string
                     self.word_completion = "".join(word_as_list)
                     # check for win condition
-                    if "_" not in self.word_completion:
+                    if "-" not in self.word_completion:
                         guessed = True
 
-            # ..if guess is the same length of the chosen word and all letters
             elif len(guess) == len(self.word) and guess.isalpha():
-                # if a full word guess has already been tried with the same word  # noqa
                 if guess in self.guessed_words:
                     print("You already guessed the word", guess)
-                # if a full word guess is valid but not correct
                 elif guess != self.word:
                     print(guess, "is not the right word")
                     self.lives -= 1
                     self.guessed_words.append(guess)
+                    print("You have: " + str(self.lives) + " lives remaining")
                 # a full word guess is valid and correct
                 else:
                     guessed = True
@@ -107,7 +112,7 @@ def main():
     hangman_game = Hangman()
     hangman_game.welcome_message()
     hangman_game.play_hangman()
-    # player input to start new games or not
+    # player input to start new games or quit playing
     while input("Play Again? (Y/N) ").upper() == "Y":
         hangman_game = Hangman()
         hangman_game.play_hangman()
